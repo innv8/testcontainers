@@ -9,7 +9,7 @@ type User struct {
 }
 
 func CreateUser(db *sql.DB, name string, age int) (id int64, err error) {
-	var query = "INSERT INTO user (name, age) VALUES (?,?)"
+	var query = "INSERT INTO user (name, age VALUES (?,?)"
 	res, err := db.Exec(query, name, age)
 	if err != nil {
 		return 0, err
