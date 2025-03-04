@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS `testcontainers`;
+USE `testcontainers`;
+
+CREATE TABLE IF NOT EXISTS `user` (
+	`id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(40) NOT NULL,
+	`age` INT NOT NULL
+);
