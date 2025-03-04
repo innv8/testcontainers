@@ -65,11 +65,3 @@ jobs:
 
       - name: Run tests
         run: go test ./logic -v
-
-      - name: Debug in case tests fail.
-        if: failure()
-        run: |
-          echo "Checking running containers"
-          docker ps -a 
-          echo "List go modules cache"
-          ls -la ~/go/pkg/mod ~/.cache/go-build || echo "❌ Cache path missing"
