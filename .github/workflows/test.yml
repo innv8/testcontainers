@@ -51,3 +51,6 @@ jobs:
           key: ${{ runner.os }}-docker-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-docker-
+
+      - name: Run tests
+        run: go test ./logic -v
