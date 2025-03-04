@@ -39,10 +39,15 @@ jobs:
       - name: Cache Go modules
         uses: actions/cache@v4
         with:
-          path: ~/go/pkg/mod 
+          path: |
+            ~/go/pkg/mod 
+            ~/.cache/go-build
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
+
+      - name: Install Go Dependencies
+        run: go mod tidy && go mod download
 
       - name: Cache Docker Layers for the Test Containers.
         uses: actions/cache@v4
@@ -52,5 +57,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
+      - name: Load Cached docker layers.
+        run: |
+          mkdir -p /tmp/.buildx-cache
+          docker buildx create --use --driver docker-container --buildkitd-flags "--debug"
+          docker buildx inspect --bootstrap
+
       - name: Run tests
         run: go test ./logic -v
+
+      - name: Debug in case tests fail.
+        if: failure()
+        run: |
+          echo "Checking running containers"
+          docker ps -a 
+          echo "List go modules cache"
+          ls -la ~/go/pkg/mod ~/.cache/go-build || echo "❌ Cache path missing"
