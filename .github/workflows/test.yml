@@ -44,11 +44,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Start Docker.
-        run: |
-          sudo systemctl start docker 
-          docker info
-
       - name: Cache Docker Layers for the Test Containers.
         uses: actions/cache@v4
         with:
