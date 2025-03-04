@@ -7,4 +7,6 @@ system and also can be run anywhere. As demonstrated in this code, they can be r
 This application is a CRUD Go application that deals with a single table in a MySQL database.
 When tests are run, a Mysql Docker container is set up and the tests run inside it.
 
+Using blacksmith
+
 > rapando
