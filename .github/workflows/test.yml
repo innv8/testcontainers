@@ -65,3 +65,15 @@ jobs:
 
       - name: Run tests
         run: go test ./logic -v
+
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: |
+          echo "We are deploying this today"
+          ls -lh
