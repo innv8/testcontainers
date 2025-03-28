@@ -139,12 +139,12 @@ func TestUpdateUser(t *testing.T) {
 	}
 
 	if user.Name != "Charlie Brown" || user.Age != 20 {
-		t.Errorf("Update failed, got %+v", user)
+		t.Errorf("Update failed, got %+v, user)
 	}
 }
 
 func TestDeleteUser(t *testing.T) {
-	userID, err := CreateUser(testDB, "David", 45)
+			userID, err := CreateUser(testDB, "David", 45)
 	if err != nil {
 		t.Fatalf(userCreateFailure, err)
 	}
