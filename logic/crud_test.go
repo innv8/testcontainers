@@ -88,10 +88,12 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
+const userCreateFailure = "Failed to create user:: %v"
+
 func TestCreateUser(t *testing.T) {
 	userID, err := CreateUser(testDB, "Alice", 45)
 	if err != nil {
-		t.Fatalf("Failed to create user: %v", err)
+		t.Fatalf(userCreateFailure, err)
 	}
 
 	user, err := GetUser(testDB, userID)
@@ -107,7 +109,7 @@ func TestCreateUser(t *testing.T) {
 func TestGetUser(t *testing.T) {
 	userID, err := CreateUser(testDB, "Bob", 12)
 	if err != nil {
-		t.Fatalf("Failed to create user: %v", err)
+		t.Fatalf(userCreateFailure, err)
 	}
 
 	user, err := GetUser(testDB, userID)
@@ -144,7 +146,7 @@ func TestUpdateUser(t *testing.T) {
 func TestDeleteUser(t *testing.T) {
 	userID, err := CreateUser(testDB, "David", 45)
 	if err != nil {
-		t.Fatalf("Failed to create user: %v", err)
+		t.Fatalf(userCreateFailure, err)
 	}
 
 	err = DeleteUser(testDB, userID)
