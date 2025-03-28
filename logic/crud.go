@@ -18,7 +18,7 @@ func CreateUser(db *sql.DB, name string, age int) (id int64, err error) {
 }
 
 func GetUser(db *sql.DB, id int64) (user User, err error) {
-	var query = "SELECT id, name, age FROM user WHERE id=? LIMIT 1"
+	var query = "SELECT id, name, age FROM user WHERE id=? LIMIT 1
 	err = db.QueryRow(query, id).Scan(&user.Id, &user.Name, &user.Age)
 	return user, err
 }
