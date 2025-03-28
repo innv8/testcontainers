@@ -1,3 +1,10 @@
+/**
+* TestContainers simple test.
+* When running tests, a MySQL instance is spun up inside a docker container,
+* tables are created and the CRUD operations are run.
+* Once the tests are done, the container is deleted.
+* This can run inside GitHub actions too.
+**/
 package main
 
 import (
@@ -17,6 +24,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to load .env because %v", err)
 	}
+
+	log.Printf("Hello World there player")
 
 	db, err = logic.DBConnect(os.Getenv("DB_URI"))
 	if err != nil {
