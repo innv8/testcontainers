@@ -16,6 +16,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
+const appVersion string = "v1.0.0"
+
 func main() {
 	var db *sql.DB
 	var err error
@@ -25,8 +27,7 @@ func main() {
 		log.Fatalf("Failed to load .env because %v", err)
 	}
 
-	log.Printf("Hello World there player")
-
+	log.Printf("--- starting testcontainer project")
 	db, err = logic.DBConnect(os.Getenv("DB_URI"))
 	if err != nil {
 		log.Fatalf("failed to connect to db because %v", err)
