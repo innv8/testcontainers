@@ -1,4 +1,4 @@
-name: Test with testcontainer
+name: Test with Testcontainers and SonarQube
 
 on:
   push:
@@ -28,10 +28,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify docker
+      - name: Verify Docker
         run: docker ps 
 
-      - name: Setup Go.
+      - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: 1.23 
@@ -49,7 +49,7 @@ jobs:
       - name: Install Go Dependencies
         run: go mod tidy && go mod download
 
-      - name: Cache Docker Layers for the Test Containers.
+      - name: Cache Docker Layers for the Test Containers
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
@@ -57,24 +57,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Load Cached docker layers.
+      - name: Load Cached Docker Layers
         run: |
           mkdir -p /tmp/.buildx-cache
           docker buildx create --use --driver docker-container --buildkitd-flags "--debug"
           docker buildx inspect --bootstrap
 
-      - name: Run tests
-        run: go test ./logic -v
+      - name: Run Tests with Coverage
+        run: go test -coverprofile=coverage.out ./logic -v
 
-  deployment:
-    needs: tests
-    runs-on: ubuntu-latest
+      - name: Convert Coverage for SonarQube
+        run: go tool cover -func=coverage.out
 
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=your-project-key
+            -Dsonar.organization=your-org
+            -Dsonar.go.coverage.reportPaths=coverage.out
 
-      - name: Deploy
-        run: |
-          echo "We are deploying this today"
-          ls -lh
