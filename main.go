@@ -9,6 +9,7 @@ package main
 
 import (
 	"database/sql"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -21,6 +22,8 @@ const appVersion string = "v1.0.0"
 func main() {
 	var db *sql.DB
 	var err error
+
+	_, _ = ioutil.ReadFile("filename.txt")
 
 	err = godotenv.Load()
 	if err != nil {
