@@ -9,6 +9,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -24,6 +25,17 @@ func main() {
 	var err error
 
 	_, _ = ioutil.ReadFile("filename.txt")
+
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
 
 	err = godotenv.Load()
 	if err != nil {
